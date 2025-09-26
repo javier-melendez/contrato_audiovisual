@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contrato para la prestación de servicios</title>
+  <style>
+    :root{
+      --bg:#0f172a;/* slate-900 */
+      --panel:#111827;/* gray-900 */
+      --muted:#334155;/* slate-700 */
+      --text:#e5e7eb;/* gray-200 */
+      --accent:#22c55e;/* green-500 */
+      --accent-2:#60a5fa;/* blue-400 */
+      --danger:#ef4444;/* red-500 */
+      --card:#0b1220;/* deep */
+      --border:#1f2937;/* gray-800 */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:linear-gradient(135deg,#0b1020,#0f172a 40%,#111827); color:var(--text);
+      font: 15px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial;
+    }
+    header{
+      padding:16px 24px; border-bottom:1px solid var(--border); position:sticky; top:0; backdrop-filter:saturate(180%) blur(6px); background:rgba(15,23,42,.75);
+      display:flex; gap:16px; align-items:center; z-index:30
+    }
+    header h1{margin:0; font-size:18px; font-weight:700}
+    header .actions{margin-left:auto; display:flex; gap:8px}
+    button, .btn{
+      background:var(--accent); color:#052e12; border:none; padding:10px 14px; border-radius:10px; font-weight:700; cursor:pointer;
+    }
+    button.secondary{background:var(--accent-2); color:#0b1730}
+    button.ghost{background:transparent; color:var(--text); border:1px solid var(--border)}
+    button.danger{background:var(--danger); color:#230b0b}
+    main{display:grid; grid-template-columns: 360px 1fr; min-height:calc(100vh - 64px)}
+    aside{
+      border-right:1px solid var(--border); padding:16px; overflow:auto; background:linear-gradient(180deg,#0f172a,#0b1220);
+    }
+    .panel{background:var(--panel); border:1px solid var(--border); border-radius:14px; padding:14px; margin-bottom:14px}
+    .panel h3{margin:0 0 8px 0; font-size:14px; letter-spacing:.3px; color:#cbd5e1}
+    label{display:block; font-size:12px; color:#cbd5e1; margin-top:8px}
+    input, textarea, select{
+      width:100%; background:#0b1220; color:var(--text); border:1px solid var(--border); border-radius:10px; padding:8px 10px; outline:none;
+    }
+    textarea{min-height:72px; resize:vertical}
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+    .list{display:flex; flex-direction:column; gap:10px; margin-top:8px}
+    .chip{display:inline-flex; gap:8px; align-items:center; background:#0b1220; border:1px dashed var(--border); padding:10px; border-radius:12px}
+    .chip .grow{flex:1}
+    .chip .mini{font-size:12px}
+    .chip .rm{background:transparent; border:1px solid var(--border); color:#cbd5e1}
+    section#preview{padding:24px; overflow:auto}
+    .doc{max-width:900px; margin:0 auto; background:#ffffff; color:#111827; border-radius:18px; border:1px solid #e5e7eb}
+    .doc .inner{padding:48px}
+    .doc h2{margin:0 0 8px 0}
+    .doc h3{margin:18px 0 6px 0}
+    .doc p{margin:8px 0}
+    .doc ol{margin:8px 0 8px 24px}
+    .muted{color:#475569}
+    .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:18px}
+    .signature{height:80px; border-bottom:1px solid #111827; margin:24px 0 6px 0}
+    .sign-block{margin-top:24px}
+    .badge{display:inline-block; background:#eef2ff; color:#3730a3; border-radius:999px; padding:3px 10px; font-size:12px}
+    .hr{height:1px; background:#e5e7eb; margin:20px 0}
+    .tags{display:flex; gap:6px; flex-wrap:wrap}
+    .tag{font-size:11px; padding:2px 8px; border:1px solid #e5e7eb; border-radius:999px; background:#f8fafc}
+
+    /* Print Styles */
+/* Print Styles */
+    /* Definición de la hoja al exportar */
+    @page {
+      size: A4;               /* o 'letter' si prefieres tamaño carta */
+      margin: 20mm 25mm;      /* superior/inf – izq/der */
+    }
+
+    @media print {
+      /* Oculta los elementos de la interfaz */
+      header, aside { 
+        display: none !important; 
+      }
+      
+      /* Asegura que el cuerpo de la página se extienda */
+      body { 
+        background: #fff; 
+        margin: 0;
+        /* IMPORTANTE: Eliminar la altura y el overflow del contenedor principal para que se expanda en múltiples páginas. */
+        min-height: auto;
+        overflow: visible;
+      }
+      
+      /* Elimina las restricciones de altura y el 'auto' overflow que causan el corte */
+      main {
+        min-height: auto !important;
+        overflow: visible !important;
+        display: block; /* Vuelve a un flujo de bloque normal para la impresión */
+      }
+      
+      /* Ajusta el contenedor del documento para que use todo el espacio de impresión */
+      .doc {
+        width: 100%;
+        max-width: none;
+        margin: 0;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+      }
+      
+      /* Reinicia el padding para usar solo los márgenes de la regla @page */
+      .doc .inner {
+        padding: 0;   /* usamos solo los márgenes de @page */
+        margin: 0;
+      }
+      
+      /* Ayuda a que los bloques no se corten entre páginas */
+      .doc h2,
+      .doc h3,
+      .doc p,
+      .doc ol,
+      .doc table,
+      .doc .inner { /* Agregamos .inner para la caja contenedora principal */
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+    }   
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Generador de Contratos – Prestación de Servicios (CO)</h1>
+    <div class="actions">
+      <button onclick="generatePreview()" title="Actualiza la vista previa">Actualizar vista previa</button>
+      <button class="secondary" onclick="window.print()" title="Generar PDF">Generar PDF</button>
+      <button class="ghost" onclick="saveJSON()" title="Guardar datos">Guardar datos</button>
+      <button class="ghost" onclick="loadJSON()" title="Cargar datos">Cargar datos</button>
+      <button class="danger" onclick="if(confirm('¿Borrar todos los datos?')){localStorage.removeItem('cps_form'); location.reload()}" title="Reset">Reset</button>
+    </div>
+  </header>
+  <main>
+    <aside>
+      <div class="panel">
+        <h3>Generales</h3>
+        <label>Ciudad</label>
+        <input id="city" placeholder="Popayán" />
+        <div class="row">
+          <div>
+            <label>Fecha (firma)</label>
+            <input id="date" type="date" />
+          </div>
+          <div>
+            <label>Moneda</label>
+            <input id="currency" value="$" />
+          </div>
+        </div>
+        <label>Objeto general (resumen)</label>
+        <textarea id="summary" placeholder="Gestión de redes, producción audiovisual, diseño y marketing digital"></textarea>
+        <label>Marco legal (visible breve)</label>
+        <textarea id="legal" placeholder="CST art. 23; Ley 23/1982 y 1915/2018; Ley 1581/2012; Ley 1480/2011; Ley 527/1999; D. 2364/2012; Ley 1753/2015 art. 135; E.T."></textarea>
+      </div>
+
+      <div class="panel" id="contractorsPanel">
+        <h3>Prestadores de servicio (uno o varios)</h3>
+        <div class="list" id="contractors"></div>
+        <button class="ghost" onclick="addContractor()">+ Agregar prestador</button>
+      </div>
+
+      <div class="panel" id="clientsPanel">
+        <h3>Contratantes (persona o empresa)</h3>
+        <div class="list" id="clients"></div>
+        <button class="ghost" onclick="addClient()">+ Agregar contratante</button>
+      </div>
+
+      <div class="panel">
+        <h3>Duración y pagos</h3>
+        <div class="row">
+          <div>
+            <label>Duración (meses)</label>
+            <input id="duration" type="number" min="1" value="6" />
+          </div>
+          <div>
+            <label>Valor total</label>
+            <input id="total" type="number" min="0" step="0.01" />
+          </div>
+        </div>
+        <label>Forma de pago (nota)</label>
+        <input id="paymentNote" placeholder="Pagos por hitos/entregables" />
+        <h4 style="margin:10px 0 0">Hitos / Entregables pagaderos</h4>
+        <div id="milestones" class="list"></div>
+        <button class="ghost" onclick="addMilestone()">+ Agregar hito</button>
+      </div>
+
+      <div class="panel">
+        <h3>Alcance (SOW)</h3>
+        <div id="scope" class="list"></div>
+        <button class="ghost" onclick="addScope()">+ Agregar entregable/actividad</button>
+      </div>
+
+      <div class="panel">
+        <h3>Cláusulas opcionales</h3>
+        <label><input type="checkbox" id="portfolioUse" checked /> Permitir uso en portafolio del prestador (con permisos y sin datos sensibles)</label>
+        <label><input type="checkbox" id="influencerCompliance" checked /> Cumplimiento Guía SIC / Ley 1480 (publicidad)</label>
+        <label><input type="checkbox" id="eSignature" checked /> Habilitar firma electrónica (Ley 527/99 y D. 2364/12)</label>
+        <label><input type="checkbox" id="killFee" checked /> Kill fee (pago proporcional por terminación anticipada)</label>
+      </div>
+
+    </aside>
+
+    <section id="preview">
+      <div class="doc">
+        <div class="inner" id="docInner">
+          <!-- Rendered contract will appear here -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // ---------- Data Model ----------
+    const state = {
+      city: "",
+      date: "",
+      currency: "$",
+      summary: "",
+      legal: "CST art. 23; Ley 23/1982 y 1915/2018; Ley 1581/2012; Ley 1480/2011; Ley 527/1999; D. 2364/2012; Ley 1753/2015 art. 135; E.T.",
+      contractors: [], // {name, idType, id, address}
+      clients: [],     // {name, idType, id, address}
+      duration: 6,
+      total: 0,
+      paymentNote: "Pagos por hitos/entregables",
+      milestones: [], // {title, due, amount, notes}
+      scope: [],      // {item}
+      options: {
+        portfolioUse: true,
+        influencerCompliance: true,
+        eSignature: true,
+        killFee: true,
+      }
+    };
+
+    // ---------- Helpers ----------
+    const $ = (sel) => document.querySelector(sel);
+    function money(v){
+      const cur = state.currency || "$";
+      const num = Number(v||0);
+      return cur+new Intl.NumberFormat('es-CO',{maximumFractionDigits:2}).format(num);
+    }
+
+    function saveJSON(){
+      const data = JSON.stringify(state);
+      localStorage.setItem('cps_form', data);
+      alert('Datos guardados en este navegador.');
+    }
+    function loadJSON(){
+      const raw = localStorage.getItem('cps_form');
+      if(!raw){alert('No hay datos guardados.'); return}
+      try{ Object.assign(state, JSON.parse(raw)); }catch(e){ alert('No se pudo cargar.'); }
+      renderFormFromState();
+      generatePreview();
+    }
+
+    // ---------- Form builders ----------
+    function contractorChip(c, idx){
+      return chipTemplate({
+        inner:`
+          <div class="row">
+            <div><input placeholder="Nombre/Razón social" value="${c.name||''}" oninput="updateContractor(${idx},'name',this.value)"></div>
+            <div><select oninput="updateContractor(${idx},'idType',this.value)">
+              ${opt(c.idType,'CC')} ${opt(c.idType,'NIT')} ${opt(c.idType,'CE')} ${opt(c.idType,'PAS')}
+            </select></div>
+          </div>
+          <div class="row">
+            <div><input placeholder="No. documento" value="${c.id||''}" oninput="updateContractor(${idx},'id',this.value)"></div>
+            <div><input placeholder="Domicilio" value="${c.address||''}" oninput="updateContractor(${idx},'address',this.value)"></div>
+          </div>
+        `,
+        rm:`removeContractor(${idx})`
+      });
+    }
+    function clientChip(c, idx){
+      return chipTemplate({
+        inner:`
+          <div class="row">
+            <div><input placeholder="Nombre/Razón social" value="${c.name||''}" oninput="updateClient(${idx},'name',this.value)"></div>
+            <div><select oninput="updateClient(${idx},'idType',this.value)">
+              ${opt(c.idType,'CC')} ${opt(c.idType,'NIT')} ${opt(c.idType,'CE')} ${opt(c.idType,'PAS')}
+            </select></div>
+          </div>
+          <div class="row">
+            <div><input placeholder="No. documento" value="${c.id||''}" oninput="updateClient(${idx},'id',this.value)"></div>
+            <div><input placeholder="Domicilio" value="${c.address||''}" oninput="updateClient(${idx},'address',this.value)"></div>
+          </div>
+        `,
+        rm:`removeClient(${idx})`
+      });
+    }
+    function milestoneChip(m, idx){
+      return chipTemplate({
+        inner:`
+          <div class="row">
+            <div><input placeholder="Hito/Entregable (p.ej., Parrilla mes 1)" value="${m.title||''}" oninput="updateMilestone(${idx},'title',this.value)"></div>
+            <div><input type="date" value="${m.due||''}" oninput="updateMilestone(${idx},'due',this.value)"></div>
+          </div>
+          <div class="row">
+            <div><input type="number" min="0" step="0.01" placeholder="Monto" value="${m.amount??''}" oninput="updateMilestone(${idx},'amount',this.value)"></div>
+            <div><input placeholder="Notas (condiciones, KPI, rondas)" value="${m.notes||''}" oninput="updateMilestone(${idx},'notes',this.value)"></div>
+          </div>
+        `,
+        rm:`removeMilestone(${idx})`
+      });
+    }
+    function scopeChip(s, idx){
+      return chipTemplate({
+        inner:`<div class="row"><div class="grow"><input placeholder="Actividad / Entregable" value="${s.item||''}" oninput="updateScope(${idx},'item',this.value)"></div></div>`,
+        rm:`removeScope(${idx})`
+      })
+    }
+    function chipTemplate({inner, rm}){
+      return `<div class="chip">\n        <div class="grow mini">${inner}</div>\n        <button class="rm" onclick="${rm}">Quitar</button>\n      </div>`
+    }
+    function opt(val, here){ return `<option ${val===here?'selected':''}>${here}</option>` }
+
+    function renderFormFromState(){
+      // map simple fields
+      ['city','date','currency','summary','legal','duration','total','paymentNote'].forEach(id=>{
+        const el = document.getElementById(id);
+        if(!el) return; el.value = state[id] ?? '';
+      });
+      document.getElementById('portfolioUse').checked = state.options.portfolioUse;
+      document.getElementById('influencerCompliance').checked = state.options.influencerCompliance;
+      document.getElementById('eSignature').checked = state.options.eSignature;
+      document.getElementById('killFee').checked = state.options.killFee;
+
+      // dynamic lists
+      document.getElementById('contractors').innerHTML = state.contractors.map(contractorChip).join('') || `<div class="muted">Sin prestadores añadidos.</div>`;
+      document.getElementById('clients').innerHTML = state.clients.map(clientChip).join('') || `<div class="muted">Sin contratantes añadidos.</div>`;
+      document.getElementById('milestones').innerHTML = state.milestones.map(milestoneChip).join('') || `<div class="muted">Añade hitos de pago.</div>`;
+      document.getElementById('scope').innerHTML = state.scope.map(scopeChip).join('') || `<div class="muted">Lista de actividades/entregables.</div>`;
+    }
+
+    // ---------- Update State ----------
+    // simple bindings
+    ['city','date','currency','summary','legal','duration','total','paymentNote'].forEach(id=>{
+      document.getElementById(id).addEventListener('input', e=>{
+        state[id] = id==='duration'||id==='total'? Number(e.target.value) : e.target.value;
+      });
+    });
+    document.getElementById('portfolioUse').addEventListener('change',e=>state.options.portfolioUse=e.target.checked);
+    document.getElementById('influencerCompliance').addEventListener('change',e=>state.options.influencerCompliance=e.target.checked);
+    document.getElementById('eSignature').addEventListener('change',e=>state.options.eSignature=e.target.checked);
+    document.getElementById('killFee').addEventListener('change',e=>state.options.killFee=e.target.checked);
+
+    function addContractor(){ state.contractors.push({name:"",idType:"CC",id:"",address:""}); renderFormFromState(); }
+    function removeContractor(i){ state.contractors.splice(i,1); renderFormFromState(); generatePreview(); }
+    function updateContractor(i,k,v){ state.contractors[i][k]=v; }
+
+    function addClient(){ state.clients.push({name:"",idType:"NIT",id:"",address:""}); renderFormFromState(); }
+    function removeClient(i){ state.clients.splice(i,1); renderFormFromState(); generatePreview(); }
+    function updateClient(i,k,v){ state.clients[i][k]=v; }
+
+    function addMilestone(){ state.milestones.push({title:"",due:"",amount:"",notes:""}); renderFormFromState(); }
+    function removeMilestone(i){ state.milestones.splice(i,1); renderFormFromState(); generatePreview(); }
+    function updateMilestone(i,k,v){ state.milestones[i][k]=v; }
+
+    function addScope(){ state.scope.push({item:""}); renderFormFromState(); }
+    function removeScope(i){ state.scope.splice(i,1); renderFormFromState(); generatePreview(); }
+    function updateScope(i,k,v){ state.scope[i][k]=v; }
+
+    // ---------- Preview Renderer ----------
+    function partyList(arr, label){
+      if(!arr.length) return `<p><span class="badge">${label}</span> — <em>pendiente por diligenciar</em></p>`;
+      const rows = arr.map(p=>`<li><strong>${escapeHtml(p.name||'—')}</strong>, ${escapeHtml(p.idType||'ID')}: ${escapeHtml(p.id||'—')}, domicilio: ${escapeHtml(p.address||'—')}</li>`).join('');
+      return `<p class="badge">${label}</p><ol>${rows}</ol>`
+    }
+    function list(items){
+      if(!items?.length) return '<p class="muted">—</p>';
+      return `<ol>${items.map(x=>`<li>${escapeHtml(x.item||x)}</li>`).join('')}</ol>`
+    }
+    function milestonesTable(){
+      if(!state.milestones.length) return '<p class="muted">—</p>';
+      const rows = state.milestones.map(m=>`<tr><td>${escapeHtml(m.title||'')}</td><td>${m.due?fmtDate(m.due):''}</td><td>${m.amount?money(m.amount):''}</td><td>${escapeHtml(m.notes||'')}</td></tr>`).join('');
+      return `<table style="width:100%; border-collapse:collapse" border="1" cellpadding="6">\n        <thead><tr><th>Hito/Entregable</th><th>Fecha</th><th>Monto</th><th>Notas</th></tr></thead>\n        <tbody>${rows}</tbody>\n      </table>`
+    }
+    function fmtDate(d){ try{ return new Date(d).toLocaleDateString('es-CO'); }catch{return d} }
+    function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m])) }
+
+    function generatePreview(){
+      const city = state.city||'[Ciudad]';
+      const date = state.date? fmtDate(state.date) : '[Fecha]';
+      const total = state.total? money(state.total) : '[Valor total]';
+
+      const intro = `
+        <h2>Contrato de Prestación de Servicios</h2>
+        <p class="muted">${escapeHtml(city)}, ${date}</p>
+        <p>Por una parte, ${state.clients.length? 'las siguientes personas/entidades identificadas más adelante' : '[Contratante(s)]'} en adelante <strong>EL CONTRATANTE</strong>; y por otra parte ${state.contractors.length? 'las personas naturales o jurídicas detalladas más adelante' : '[Prestador(es) de servicios]'} en adelante <strong>EL/LOS CONTRATISTA(S)</strong>, acuerdan celebrar el presente <strong>Contrato de Prestación de Servicios</strong>, de naturaleza civil o mercantil, regido por el Código Civil y de Comercio, <strong>sin vínculo laboral</strong> conforme al art. 23 del CST, y de acuerdo con el siguiente marco: ${escapeHtml(state.legal||'')}</p>
+      `;
+
+      const partes = `
+        <h3>I. Identificación de las partes</h3>
+        ${partyList(state.clients, 'Contratante(s)')} 
+        ${partyList(state.contractors, 'Contratista(s)')} 
+      `;
+
+      const objeto = `
+        <h3>II. Objeto</h3>
+        <p>${escapeHtml(state.summary||'[Resumen del objeto]')}.</p>
+        <p>El alcance técnico se detalla a continuación (Anexo SOW):</p>
+        ${list(state.scope)}
+      `;
+
+      const duracion = `
+        <h3>III. Duración</h3>
+        <p>La vigencia será de <strong>${state.duration||'[meses]'} mes(es)</strong> contados desde la firma o hasta la finalización del proyecto, lo que ocurra primero. Se podrán suscribir actas de inicio y terminación.</p>
+      `;
+
+      const valor = `
+        <h3>IV. Honorarios y forma de pago</h3>
+        <p>El valor total neto exento de IVA y retenciones por los servicios es de <strong>${total}</strong>. La forma de pago será <strong>${escapeHtml(state.paymentNote||'por hitos')}</strong>, según la siguiente tabla:</p>
+        ${milestonesTable()}
+        <p>Los pagos estarán condicionados a la entrega y aceptación de cada entregable y a la presentación de soportes de seguridad social (PILA) del período respectivo.</p>
+      `;
+
+      const ss = `
+        <h3>V. Seguridad social del contratista</h3>
+        <p>El/los CONTRATISTA(S) declaran que se encuentran afiliados a salud, pensión y riesgos laborales (ARL) y que realizarán sus aportes mensualmente, con Ingreso Base de Cotización mínimo del <strong>40%</strong> del valor mensualizado del contrato (Ley 1753/2015, art. 135). Para riesgos I–III la afiliación a ARL será a cargo del contratista; para riesgos IV–V se acuerda que será a cargo del contratante, de conformidad con la actividad y la normativa aplicable.</p>
+      `;
+
+      const obligaciones = `
+        <h3>VI. Obligaciones</h3>
+        <p><strong>Del CONTRATISTA:</strong> (i) ejecutar los servicios con autonomía técnica y administrativa, (ii) cumplir con cronogramas y estándares de calidad, (iii) contar con las licencias y permisos de terceros (música, tipografías, bancos), (iv) entregar informes y métricas cuando aplique, (v) guardar confidencialidad y protección de datos, (vi) respetar derechos de autor de terceros y garantizar originalidad.</p>
+        <p><strong>Del CONTRATANTE:</strong> (i) entregar información e insumos oportunamente, (ii) aprobar o rechazar entregables dentro de los plazos, (iii) pagar los honorarios pactados contra entrega aceptada y soportes, (iv) respetar la autonomía del contratista.</p>
+      `;
+
+      const pi = `
+        <h3>VII. Propiedad intelectual</h3>
+        <p>Los derechos <em>morales</em> permanecerán en cabeza de los autores. El/los CONTRATISTA(S) ceden al CONTRATANTE, a título oneroso, los derechos <em>patrimoniales</em> sobre los entregables creados en desarrollo del contrato, de forma <strong>expresa</strong> y por el tiempo, territorio y modalidades de uso que a continuación se definen: (i) reproducción, (ii) distribución, (iii) comunicación pública y (iv) transformación, con alcance <strong>global</strong> y por el <strong>plazo que se convenga</strong> (si no se diligencia, se entenderá por 10 años renovables por acuerdo escrito). Cualquier uso no previsto requerirá autorización escrita adicional.</p>
+        ${state.options.portfolioUse? `<p>Se autoriza al CONTRATISTA a usar las obras en su portafolio con fines demostrativos, sin revelar datos sensibles y respetando confidencialidad, salvo instrucción en contrario.</p>`:``}
+      `;
+
+      const confid = `
+        <h3>VIII. Confidencialidad y datos personales</h3>
+        <p>Toda información técnica, comercial y de clientes es confidencial. El CONTRATISTA actuará como <strong>encargado del tratamiento</strong> cuando procese datos personales del CONTRATANTE o sus clientes, conforme a la Ley 1581/2012: tratará los datos solo para las finalidades del contrato, aplicará medidas de seguridad y al terminar procederá al borrado o devolución documentada.</p>
+      `;
+
+      const publicidad = state.options.influencerCompliance? `
+        <h3>IX. Cumplimiento publicitario</h3>
+        <p>Las partes cumplirán la Ley 1480/2011 y las Guías de la SIC para publicidad e influencia en entornos digitales (etiquetas claras como <strong>#Publicidad</strong> o <strong>#Ad</strong> cuando aplique), conservando evidencias de cumplimiento (briefs, capturas, URLs).</p>
+      `: '';
+
+      const entrega = `
+        <h3>X. Entrega, revisión y aceptación</h3>
+        <p>Cada entrega tendrá criterios objetivos (técnicos y creativos) definidos en el SOW. El CONTRATANTE contará con <strong>5 días hábiles</strong> para emitir comentarios o rechazo motivado; de lo contrario se entenderá aceptada. Las modificaciones fuera de alcance se formalizarán mediante orden de cambio con ajuste de plazos y precio.</p>
+      `;
+
+      const penal = `
+        <h3>XI. Cláusula penal</h3>
+        <p>En caso de incumplimiento grave, la parte incumplida pagará a la otra una penalidad equivalente al <strong>10%</strong> del valor total del contrato, sin perjuicio de la indemnización plena de perjuicios cuando haya lugar.</p>
+      `;
+
+      const termino = `
+        <h3>XII. Terminación anticipada</h3>
+        <p>El contrato podrá terminar por: (i) incumplimiento grave, (ii) fuerza mayor, (iii) mutuo acuerdo o (iv) decisión unilateral con preaviso de 10 días. ${state.options.killFee? 'En todos los casos procederá el pago proporcional por el trabajo ejecutado (kill fee) y la entrega de avances contra pago.':''}</p>
+      `;
+
+      const resp = `
+        <h3>XIII. Responsabilidad</h3>
+        <p>El CONTRATISTA garantiza que los entregables no infringen derechos de terceros y mantendrá indemne al CONTRATANTE por reclamaciones derivadas de materiales provistos por él. La responsabilidad total, salvo dolo o culpa grave, se limita al valor total del contrato.</p>
+      `;
+
+      const firma = state.options.eSignature? `
+        <h3>XIV. Firma electrónica</h3>
+        <p>Las partes aceptan el uso de firma electrónica o digital conforme a la Ley 527/1999 y Decreto 2364/2012, con plena equivalencia jurídica a la firma manuscrita.</p>
+      `: '';
+
+      const controversias = `
+        <h3>XV. Solución de controversias y ley aplicable</h3>
+        <p>Las partes procurarán arreglo directo. De no ser posible, acudirán a conciliación y, en su defecto, a la jurisdicción ordinaria o arbitraje en derecho (Ley 1563/2012). Este contrato se rige por las leyes de la República de Colombia.</p>
+      `;
+
+      const cierre = `
+        <div class="hr"></div>
+        <h3>Firmas</h3>
+        <div class="grid-2">
+          <div class="sign-block">
+            <div class="signature"></div>
+            <p><strong>EL CONTRATANTE</strong></p>
+            ${signList(state.clients)}
+          </div>
+          <div class="sign-block">
+            <div class="signature"></div>
+            <p><strong>EL/LOS CONTRATISTA(S)</strong></p>
+            ${signList(state.contractors)}
+          </div>
+        </div>
+        <p class="muted">Lugar y fecha: ${escapeHtml(city)}, ${date}</p>
+      `;
+
+      const html = intro + partes + objeto + duracion + valor + ss + obligaciones + pi + confid + publicidad + entrega + penal + termino + resp + firma + controversias + cierre;
+      document.getElementById('docInner').innerHTML = html;
+    }
+
+    function signList(arr){
+      if(!arr.length) return '<p class="muted">—</p>';
+      return '<div class="tags">' + arr.map(p=>`<span class="tag">${escapeHtml(p.name||'')} (${escapeHtml(p.idType||'')}: ${escapeHtml(p.id||'')})</span>`).join('') + '</div>'
+    }
+
+    // ---------- Init ----------
+    // some defaults for quick demo
+    if(!localStorage.getItem('cps_form')){
+      state.city = 'Popayán';
+      state.summary = 'Gestión de redes sociales, diseño gráfico y producción audiovisual para la marca';
+      state.contractors = [{name:'Estudio Creativo XYZ SAS', idType:'NIT', id:'901.234.567-8', address:'Cali'}, {name:'Laura Pérez', idType:'CC', id:'1.234.567.890', address:'Popayán'}];
+      state.clients = [{name:'CAMILO ASTAIZA', idType:'CC', id:'1.111.222.333', address:'Popayán'}];
+      state.duration = 6;
+      state.total = 7392000;
+      state.milestones = [
+        {title:'Parrilla y piezas del mes 1 + informe', due:'2025-10-05', amount:1232000, notes:'2 rondas de cambios'},
+        {title:'Producción y entrega de video (60s)', due:'2025-10-20', amount:1232000, notes:'Formato vertical FullHD'},
+      ];
+      state.scope = [
+        {item:'3 publicaciones semanales (reel/pieza/foto) y copies'},
+        {item:'2 sesiones de foto/video mensuales (2 horas c/u)'},
+        {item:'Optimización de perfiles y moderación básica'},
+        {item:'Informe mensual de métricas'}
+      ];
+    }
+    renderFormFromState();
+    generatePreview();
+  </script>
+</body>
+</html>
